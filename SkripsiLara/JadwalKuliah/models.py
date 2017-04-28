@@ -1,5 +1,6 @@
 from django.db import models
-from JadwalKuliah import TanggalFields
+
+from SkripsiLara.JadwalKuliah import TanggalFields
 
 
 class Jadwal(models.Model):

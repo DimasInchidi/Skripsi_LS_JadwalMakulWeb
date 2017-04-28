@@ -1,7 +1,8 @@
+from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.db.models import Q
-from JadwalKuliah.models import Jadwal
+
+from SkripsiLara.JadwalKuliah.models import Jadwal
 
 
 # Create your views here.
@@ -14,6 +15,7 @@ def index(request):
 def mobile(request):
     dosen = request.GET.get('dosen', '')
     kelas = request.GET.get('kelas', '')
+    jdl = Jadwal.objects.none().values()
     if len(dosen) > 0 & len(kelas) > 0:
         jdl = Jadwal.objects.filter(Q(Dosen_1=dosen) | Q(Dosen_2=dosen) | Q(Dosen_3=dosen) | Q(Kelas=kelas)).values()
     elif len(dosen) > 0:

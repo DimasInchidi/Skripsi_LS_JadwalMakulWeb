@@ -1,5 +1,6 @@
 from django.contrib import admin
-from JadwalKuliah.models import Jadwal
+
+from SkripsiLara.JadwalKuliah.models import Jadwal
 
 
 # Register your models here.
