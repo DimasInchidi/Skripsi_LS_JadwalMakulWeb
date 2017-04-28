@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+    <title>FKTI - Jadwal Kuliah</title>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css">
+    <link href="https://cdn.datatables.net/1.10.15/css/dataTables.material.min.css">
+    <link href="{% static 'css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+<nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+        <a id="logo-container" href="#" class="brand-logo">Jadwal Kuliah</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="/admin">Admin Login</a></li>
+        </ul>
+
+        <ul id="nav-mobile" class="side-nav">
+            <li><a href="/admin">Admin</a></li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+</nav>
+
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <br><br>
+            <h1 class="header center teal-text text-lighten-2">Teknik Informatika</h1>
+            <div class="row center">
+                <h5 class="header col s12 light">Jadwal Kuliah Program Studi Teknik Informatika FKTI</h5>
+            </div>
+            <div class="row center">
+                Download Aplikasi Mobile Disini<br>
+            </div>
+            <div class="row center">
+                <a href="http://drive.google.com/" id="download-button"
+                   class="btn-large waves-effect waves-light teal lighten-1">Download APK</a>
+            </div>
+            <br><br>
+
+        </div>
+    </div>
+    <div class="parallax"><img src="{% static 'background1.jpg' %}" alt="Unsplashed background img 1"></div>
+</div>
+
+
+<div class="container">
+    <div class="section">
+
+        <!--   Icon Section   -->
+        <div class="row center">
+            <div class="col s12 center">
+                <h5 class="center">Data Jadwal Mata Kuliah</h5>
+
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="parallax-container valign-wrapper">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <div class="row center">
+                <h5 class="header col s12 light">Jadwal ini terintegrasi dengan aplikasi mobile Pemberitahuan
+                    Jadwal</h5>
+            </div>
+        </div>
+    </div>
+    <div class="parallax"><img src="{% static 'background2.jpg' %}" alt="Unsplashed background img 2"></div>
+</div>
+
+
+<footer class="page-footer teal">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Tentang Web ini</h5>
+                <p class="grey-text text-lighten-4">Web ini dibangun dalam rangka penyelesaian tugas akhir (Skripsi)
+                    Fakultas Ilmu Komputer dan Teknologi Informasi Universitas Mulawarman. Doakan saya cepat lulus yaaa
+                    :D</p>
+
+
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">Terimakasih Untuk</h5>
+                <ul>
+                    {# jangan lupa #! diganti url facebook #}
+                    <li><a class="white-text" href="#!">Ibunda Tercinta</a></li>
+                    <li><a class="white-text" href="#!">Bapak Tersayang</a></li>
+                    <li><a class="white-text" href="#!">Dosen Pembimbing 1</a></li>
+                    <li><a class="white-text" href="#!">Dosen Pembimbing 2</a></li>
+                </ul>
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">Dibangun dengan</h5>
+                <ul>
+                    <li><a class="white-text" href="https://python.org">Python</a></li>
+                    <li><a class="white-text" href="https://djangoproject.com">Django</a></li>
+                    <li><a class="white-text" href="https://heroku.com">Heroku</a></li>
+                    <li><a class="white-text" href="https://github.com">Github</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            Dibuat Oleh <a class="brown-text text-lighten-3" href="https://www.instagram.com/lara_silvia/">Lara
+            Silvia</a>
+        </div>
+    </div>
+</footer>
+
+
+<!--  Scripts-->
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.material.min.js"></script>
+<script src="{% static 'js/materialize.js' %}"></script>
+<script src="{% static 'js/init.js' %}"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#jadwal').DataTable({
+
+            columnDefs: [
+                {
+                    targets: [0, 1, 2],
+                    className: 'mdl-data-table__cell--non-numeric'
+                }
+            ]
+        });
+    });
+</script>
+</body>
+</html>

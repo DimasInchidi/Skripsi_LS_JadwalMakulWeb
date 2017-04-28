@@ -1,0 +1,51 @@
+{% extends 'index_base.html' %}
+{% block content %}
+    <script>var hari = new Array("", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"); </script>
+    <table id="jadwal" class="mdl-data-table">
+        <thead>
+        <tr>
+            <th>Hari</th>
+            <th>Jam</th>
+            <th>Ruang</th>
+            <th>SKS</th>
+            <th>Kelas</th>
+            <th>Mata Kuliah</th>
+            <th>Dosen 1</th>
+            <th>Dosen 2</th>
+            <th>Dosen 3</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for data in jadwal %}
+            <tr>
+                <td>
+                    <script>
+                        document.write(hari[{{ data.Hari }}]);
+                    </script>
+                </td>
+                <td>{{ data.Jam }} - {{ data.Jam_hingga }}</td>
+                <td>{{ data.Ruang }}</td>
+                <td>{{ data.SKS }}</td>
+                <td>{{ data.Kelas }}</td>
+                <td>{{ data.MataKuliah }}</td>
+                <td>{{ data.Dosen_1 }}</td>
+                <td>{{ data.Dosen_2 }}</td>
+                <td>{{ data.Dosen_3 }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Hari</th>
+            <th>Jam</th>
+            <th>Ruang</th>
+            <th>SKS</th>
+            <th>Kelas</th>
+            <th>Mata Kuliah</th>
+            <th>Dosen 1</th>
+            <th>Dosen 2</th>
+            <th>Dosen 3</th>
+        </tr>
+        </tfoot>
+    </table>
+{% endblock %}
