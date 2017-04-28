@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+
 import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -38,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'whitenoise.runserver_nostatic',
-    'JadwalKuliah.apps.JadwalkuliahConfig',
+    'SkripsiLara.JadwalKuliah.apps.JadwalkuliahConfig',
 ]
 
 MIDDLEWARE = [
