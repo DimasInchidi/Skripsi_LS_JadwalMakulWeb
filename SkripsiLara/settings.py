@@ -52,12 +52,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = '{{ project_name }}.urls'
+ROOT_URLCONF = 'SkripsiLara.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, '{{ project_name }}/FKTI')],
+        'DIRS': [os.path.join(BASE_DIR, 'SkripsiLara/FKTI')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -70,12 +70,11 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = '{{ project_name }}.wsgi.application'
+WSGI_APPLICATION = 'SkripsiLara.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-DATABASES = {}
-DATABASES['default'] = dj_database_url.config()
+DATABASES = {'default': dj_database_url.config()}
 DATABASES['default']['CONN_MAX_AGE'] = 500
 
 # Password validation
