@@ -1,3 +1,5 @@
+from itertools import chain
+
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -32,3 +34,16 @@ def android_json(data):
     for i in range(data.__len__()):
         list_result[i] = data[i]
     return list_result
+
+
+def dosen(request):
+    dosen1 = Jadwal.objects.values_list('Dosen_1', flat=True).values()
+    dosen2 = Jadwal.objects.values_list('Dosen_2', flat=True).values()
+    dosen3 = Jadwal.objects.values_list('Dosen_3', flat=True).values()
+    jdl = list(chain(dosen1, dosen2, dosen3))
+    return JsonResponse(android_json(jdl))
+
+
+def kelas(request):
+    jdl = Jadwal.objects.values_list('Kelas', flat=True).values()
+    return JsonResponse(android_json(jdl))

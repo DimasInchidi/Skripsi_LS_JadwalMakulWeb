@@ -21,5 +21,7 @@ from SkripsiLara.JadwalKuliah import views
 urlpatterns = [
     url(r'^$', views.index),
     url(r'^android/$', views.mobile),
+    url(r'^android/kelas$', views.kelas),
+    url(r'^android/dosen$', views.dosen),
     url(r'^admin/', admin.site.urls),
 ]
