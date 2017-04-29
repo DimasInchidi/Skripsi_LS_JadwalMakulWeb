@@ -37,9 +37,9 @@ def android_json(data):
 
 
 def dosen(request):
-    dosen1 = Jadwal.objects.values_list('Dosen_1', flat=True).values()
-    dosen2 = Jadwal.objects.values_list('Dosen_2', flat=True).values()
-    dosen3 = Jadwal.objects.values_list('Dosen_3', flat=True).values()
+    dosen1 = Jadwal.objects.only('Dosen_1').values_list('Dosen_1', flat=True).values()
+    dosen2 = Jadwal.objects.only('Dosen_2').values_list('Dosen_2', flat=True).values()
+    dosen3 = Jadwal.objects.only('Dosen_3').values_list('Dosen_3', flat=True).values()
     jdl = list(chain(dosen1, dosen2, dosen3))
     return JsonResponse(android_json(jdl))
 
