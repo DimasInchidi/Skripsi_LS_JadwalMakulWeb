@@ -1,13 +1,8 @@
-from itertools import chain
-
+from JadwalKuliah.models import JadwalKuliah as Jadwal, Dosen, Kelas
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from SkripsiLara.JadwalKuliah.models import Jadwal
-
-
-# Create your views here.
 
 def index(request):
     jadwal = Jadwal.objects.all()
@@ -17,7 +12,6 @@ def index(request):
 def mobile(request):
     dosen = request.GET.get('dosen', '')
     kelas = request.GET.get('kelas', '')
-    jdl = Jadwal.objects.none().values()
     if len(dosen) > 0 & len(kelas) > 0:
         jdl = Jadwal.objects.filter(Q(Dosen_1=dosen) | Q(Dosen_2=dosen) | Q(Dosen_3=dosen) | Q(Kelas=kelas)).values()
     elif len(dosen) > 0:
@@ -37,13 +31,10 @@ def android_json(data):
 
 
 def dosen(request):
-    dosen1 = Jadwal.objects.values_list('Dosen_1', flat=True).distinct()
-    dosen2 = Jadwal.objects.values_list('Dosen_2', flat=True).distinct()
-    dosen3 = Jadwal.objects.values_list('Dosen_3', flat=True).distinct()
-    jdl = list(set(chain(dosen1, dosen2, dosen3)))
-    return JsonResponse(android_json(jdl))
+    data_dosen = list(Dosen.objects.values_list('dosen', flat=True).distinct())
+    return JsonResponse(android_json(data_dosen))
 
 
 def kelas(request):
-    jdl = list(set(Jadwal.objects.values_list('Kelas', flat=True).distinct()))
-    return JsonResponse(android_json(jdl))
+    data_kelas = list(Kelas.objects.values_list('kelas', flat=True).distinct())
+    return JsonResponse(android_json(data_kelas))
