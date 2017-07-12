@@ -1,7 +1,8 @@
-from JadwalKuliah.models import JadwalKuliah as Jadwal, Dosen, Kelas
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render
+
+from SkripsiLara.JadwalKuliah.models import JadwalKuliah as Jadwal, Dosen, Kelas
 
 
 def index(request):

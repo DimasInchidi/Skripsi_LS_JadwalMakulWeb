@@ -1,6 +1,7 @@
-from JadwalKuliah.models import *
 from django.contrib import admin
 from django.utils.safestring import mark_safe
+
+from SkripsiLara.JadwalKuliah.models import *
 
 
 class FakultasAdmin(admin.ModelAdmin):
