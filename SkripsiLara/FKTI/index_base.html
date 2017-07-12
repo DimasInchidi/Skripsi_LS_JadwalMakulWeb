@@ -18,11 +18,11 @@
     <div class="nav-wrapper container">
         <a id="logo-container" href="#" class="brand-logo">Jadwal Kuliah</a>
         <ul class="right hide-on-med-and-down">
-            <li><a href="/admin">Admin Login</a></li>
+            <li><a href="{% url 'admin:index' %}">Admin Login</a></li>
         </ul>
 
         <ul id="nav-mobile" class="side-nav">
-            <li><a href="/admin">Admin</a></li>
+            <li><a href="{% url 'admin:index' %}">Admin</a></li>
         </ul>
         <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
@@ -57,7 +57,7 @@
         <!--   Icon Section   -->
         <div class="row center">
             <div class="col s12 center">
-                <h5 class="center">Data Jadwal Mata Kuliah</h5>
+                <h5 class="center" id="tabledata">Data Jadwal Mata Kuliah</h5>
 
                 {% block content %}{% endblock %}
             </div>
@@ -95,10 +95,10 @@
                 <h5 class="white-text">Terimakasih Untuk</h5>
                 <ul>
                     {# jangan lupa #! diganti url facebook #}
-                    <li><a class="white-text" href="#!">Ibunda Tercinta</a></li>
-                    <li><a class="white-text" href="#!">Bapak Tersayang</a></li>
-                    <li><a class="white-text" href="#!">Dosen Pembimbing 1</a></li>
-                    <li><a class="white-text" href="#!">Dosen Pembimbing 2</a></li>
+                    <li><a class="white-text" href="#">Ibunda Tercinta</a></li>
+                    <li><a class="white-text" href="#">Bapak Tersayang</a></li>
+                    <li><a class="white-text" href="#">Dosen Pembimbing 1</a></li>
+                    <li><a class="white-text" href="#">Dosen Pembimbing 2</a></li>
                 </ul>
             </div>
             <div class="col l3 s12">
@@ -132,15 +132,56 @@
 <script>
     $(document).ready(function () {
         $('#jadwal').DataTable({
-
+            "lengthChange": false,
             columnDefs: [
                 {
                     targets: [0, 1, 2],
-                    className: 'mdl-data-table__cell--non-numeric'
+                    className: 'mdl-data-table__cell--non-numeric',
+                    orderData: [0, 1, 2]
                 }
-            ]
+            ],
+            "dom": '<"toolbar">frtip',
+            initComplete: function () {
+                this.api().columns([-1]).every(function () {
+                    var column = this;
+                    var select = $('<select><option value="all">all</option></select>')
+                        .appendTo($(column.footer()))
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+                    column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                });
+                this.api().columns([0]).every(function () {
+                    var column = this;
+                    var select = $('<ul class="tabs col s12"></ul>')
+                        .appendTo($("div.toolbar"))
+                        .click(function () {
+                            var val = $(this).find('a.active').attr('id');
+                            console.log("value: " + val);
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                            $('ul.tabs').tabs();
+                        });
+                    column.data().unique().sort().reverse().each(function (d, j) {
+                        select.append('<li class="tab"><a href="#tabledata" class="teal-text" id="' + d + '">' + d + '</a></li>')
+                    });
+                    column.search('Senin', true, false).draw();
+                });
+                $('ul.tabs').tabs();
+            }
         });
+        $('select').material_select();
     });
+
 </script>
 </body>
 </html>

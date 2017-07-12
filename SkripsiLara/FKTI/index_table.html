@@ -1,51 +1,49 @@
 {% extends 'index_base.html' %}
 {% block content %}
-    <script>var hari = new Array("", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"); </script>
-    <table id="jadwal" class="mdl-data-table">
-        <thead>
-        <tr>
-            <th>Hari</th>
-            <th>Jam</th>
-            <th>Ruang</th>
-            <th>SKS</th>
-            <th>Kelas</th>
-            <th>Mata Kuliah</th>
-            <th>Dosen 1</th>
-            <th>Dosen 2</th>
-            <th>Dosen 3</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for data in jadwal %}
+    {% if jadwal|length > 0 %}
+        <table id="jadwal" class="mdl-data-table striped">
+            <thead>
             <tr>
-                <td>
-                    <script>
-                        document.write(hari[{{ data.Hari }}]);
-                    </script>
-                </td>
-                <td>{{ data.Jam }} - {{ data.Jam_hingga }}</td>
-                <td>{{ data.Ruang }}</td>
-                <td>{{ data.SKS }}</td>
-                <td>{{ data.Kelas }}</td>
-                <td>{{ data.MataKuliah }}</td>
-                <td>{{ data.Dosen_1 }}</td>
-                <td>{{ data.Dosen_2 }}</td>
-                <td>{{ data.Dosen_3 }}</td>
+                <th>Hari</th>
+                <th>Jam</th>
+                <th>Ruang</th>
+                <th>SKS</th>
+                <th>Kelas</th>
+                <th>Mata Kuliah</th>
+                <th>Dosen</th>
+                <th>Program Studi</th>
             </tr>
-        {% endfor %}
-        </tbody>
-        <tfoot>
-        <tr>
-            <th>Hari</th>
-            <th>Jam</th>
-            <th>Ruang</th>
-            <th>SKS</th>
-            <th>Kelas</th>
-            <th>Mata Kuliah</th>
-            <th>Dosen 1</th>
-            <th>Dosen 2</th>
-            <th>Dosen 3</th>
-        </tr>
-        </tfoot>
-    </table>
+            </thead>
+            <tbody>
+            {% for data in jadwal %}
+                <tr>
+                    <td>
+                        {{ data.get_hari }}
+                    </td>
+                    <td>{{ data.jam_mulai }}{% if data.jam_selesai|length %} - {{ data.jam_selesai }}{% endif %}</td>
+                    <td>{{ data.ruang }}</td>
+                    <td>{{ data.matakuliah.matakuliah.sks }}</td>
+                    <td>{{ data.matakuliah.get_kelas }}</td>
+                    <td>{{ data.matakuliah.matakuliah.matakuliah }}</td>
+                    <td>{{ data.matakuliah.get_dosen }}</td>
+                    <td>{{ data.matakuliah.matakuliah.prodi }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>Hari</th>
+                <th>Jam</th>
+                <th>Ruang</th>
+                <th>SKS</th>
+                <th>Kelas</th>
+                <th>Mata Kuliah</th>
+                <th>Dosen</th>
+                <th>Program Studi</th>
+            </tr>
+            </tfoot>
+        </table>
+    {% else %}
+        Data Kosong ({{ jadwal|length }})
+    {% endif %}
 {% endblock %}
