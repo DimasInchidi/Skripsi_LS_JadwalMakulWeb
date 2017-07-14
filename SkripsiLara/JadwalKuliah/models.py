@@ -168,3 +168,6 @@ class JadwalKuliah(models.Model):
 
     def get_hari(self):
         return self.DAY_OF_THE_WEEK[self.hari]
+
+    def get_jam(self):
+        return str(self.jam_mulai) + ' - ' + str(self.jam_selesai) if self.jam_selesai else self.jam_mulai
