@@ -1,8 +1,7 @@
-from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render
-
-from SkripsiLara.JadwalKuliah.models import JadwalKuliah as Jadwal, Dosen, Kelas
+from django.db.models import Q
+from JadwalKuliah.models import JadwalKuliah as Jadwal, Dosen, Kelas
 
 
 def index(request):
@@ -13,15 +12,70 @@ def index(request):
 def mobile(request):
     dosen = request.GET.get('dosen', '')
     kelas = request.GET.get('kelas', '')
-    if len(dosen) > 0 & len(kelas) > 0:
-        jdl = Jadwal.objects.filter(Q(Dosen_1=dosen) | Q(Dosen_2=dosen) | Q(Dosen_3=dosen) | Q(Kelas=kelas)).values()
+    if not (dosen == kelas == ''):
+        jdl = Jadwal.objects.filter(
+            Q(
+                matakuliah__dosen1__dosen=dosen
+            ) | Q(
+                matakuliah__dosen2__dosen=dosen
+            ) | Q(
+                matakuliah__dosen3__dosen=dosen
+            ) | Q(
+                matakuliah__kelas1__kelas=kelas
+            ) | Q(
+                matakuliah__kelas2__kelas=kelas
+            ) | Q(
+                matakuliah__kelas3__kelas=kelas
+            ) | Q(
+                matakuliah__kelas4__kelas=kelas
+            ) | Q(
+                matakuliah__kelas5__kelas=kelas
+            )
+        )
     elif len(dosen) > 0:
-        jdl = Jadwal.objects.filter(Q(Dosen_1=dosen) | Q(Dosen_2=dosen) | Q(Dosen_3=dosen)).values()
+        jdl = Jadwal.objects.filter(
+            Q(
+                matakuliah__dosen1__dosen=dosen
+            ) | Q(
+                matakuliah__dosen2__dosen=dosen
+            ) | Q(
+                matakuliah__dosen3__dosen=dosen
+            )
+        )
     elif len(kelas) > 0:
-        jdl = Jadwal.objects.filter(Kelas=kelas).values()
-    elif dosen == kelas == '':
-        jdl = Jadwal.objects.filter().values()
-    return JsonResponse(android_json(jdl))
+        jdl = Jadwal.objects.filter(
+            Q(
+                matakuliah__kelas1__kelas=kelas
+            ) | Q(
+                matakuliah__kelas2__kelas=kelas
+            ) | Q(
+                matakuliah__kelas3__kelas=kelas
+            ) | Q(
+                matakuliah__kelas4__kelas=kelas
+            ) | Q(
+                matakuliah__kelas5__kelas=kelas
+            )
+        )
+    else:
+        jdl = Jadwal.objects.filter()
+    return JsonResponse(to_json(jdl))
+
+
+def to_json(data):
+    list_result = {}
+    n = 0
+    for i in data:
+        hari = 'hari'
+        row = {
+            'Hari': i.hari, 'Jam': i.jam_mulai, 'Jam_hingga': i.jam_selesai, 'Ruang': i.ruang.ruang,
+            'SKS': i.matakuliah.matakuliah.sks, 'Kelas': i.matakuliah.kelas1.kelas,
+            'MataKuliah': i.matakuliah.matakuliah.matakuliah, 'Dosen_1': i.matakuliah.dosen1.dosen,
+            'Dosen_2': i.matakuliah.dosen1.dosen,
+            'Dosen_3': i.matakuliah.dosen1.dosen,
+        }
+        list_result[n] = row
+        n += 1
+    return list_result
 
 
 def android_json(data):
