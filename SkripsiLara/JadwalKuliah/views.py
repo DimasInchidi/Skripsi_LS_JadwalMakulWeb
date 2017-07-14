@@ -65,13 +65,14 @@ def to_json(data):
     list_result = {}
     n = 0
     for i in data:
-        hari = 'hari'
         row = {
-            'Hari': i.hari, 'Jam': i.jam_mulai, 'Jam_hingga': i.jam_selesai, 'Ruang': i.ruang.ruang,
-            'SKS': i.matakuliah.matakuliah.sks, 'Kelas': i.matakuliah.kelas1.kelas,
-            'MataKuliah': i.matakuliah.matakuliah.matakuliah, 'Dosen_1': i.matakuliah.dosen1.dosen,
-            'Dosen_2': i.matakuliah.dosen1.dosen,
-            'Dosen_3': i.matakuliah.dosen1.dosen,
+            'Hari': i.get_hari(),
+            'Jam': i.get_jam(),
+            'Ruang': i.ruang.ruang,
+            'Matakuliah': i.matakuliah.matakuliah.matakuliah,
+            'SKS': i.matakuliah.matakuliah.sks,
+            'Kelas': i.matakuliah.get_kelas(),
+            'Dosen': i.matakuliah.get_dosen(),
         }
         list_result[n] = row
         n += 1
